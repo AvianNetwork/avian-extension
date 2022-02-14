@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+                <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+		<!-- Google Fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+		<!-- Bootstrap core CSS -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Material Design Bootstrap -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
+		<!-- JQuery -->
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<!-- Bootstrap tooltips -->
+		<script type="text/javascript" src="popper.min.js"></script>
+		<!-- Bootstrap core JavaScript -->
+		<script type="text/javascript" src="bootstrap.min.js"></script>
+		<!-- MDB core JavaScript -->
+		<script type="text/javascript" src="mdb.min.js"></script>
+
+		<script src="sha256.min.js"></script>
+		<script src="jquery.qrcode.min.js"></script>
+		<script src="jsQR.js"></script>
+		<script src="multilang.js"></script>
+	       	<script src="bitcoinjs.min.js"></script>
+		<script src="index.js"></script>
+		<style>
+			html {
+				height: 100%;
+			}
+			html, body {
+				min-height: 100%;
+			}
+			body {
+				font-family: 'Source Sans Pro', sans-serif;
+				padding-top: 75px;
+				padding-bottom: 56px;
+				position: relative;
+			}
+			#logo {
+				max-width: 30px;
+				max-height: 30px;
+				margin-top: -5px;
+				margin-right: 5px;
+			}
+			.b-width {
+				min-width: 100px;
+			}
+			.navbar-dark .navbar-nav .nav-link.active {
+				color: rgba(255,255,255,.75);
+			}
+			.router-page {
+				display: none;
+			}
+			.c-pointer {
+				cursor: pointer;
+			}
+			.disabled {
+				pointer-events: none;
+			}
+			.break-lines {
+			  /* https://stackoverflow.com/a/18706058/9217774 <3 */
+			  -ms-word-break: break-all;
+				word-break: break-all;
+
+			  /* Non standard for webkit */
+				word-break: break-word;
+
+				-webkit-hyphens: auto;
+				   -moz-hyphens: auto;
+					-ms-hyphens: auto;
+						hyphens: auto;
+			}
+			.qr-code canvas{
+				max-width: 100%;
+			}
+			.wallet-balance {
+				font-size: 23px;
+			}
+			.wallet-balance .text-monospace {
+				font-size: 20px;
+			}
+			[class*="entypo"]:before {
+				font-family: 'EntypoRegular', sans-serif;
+				font-size: 16px;
+			}
+			@media (max-width: 991.98px) {
+				.navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid {
+					padding-right: 15px;
+					padding-left: 15px;
+				}
+			}
+			.balance-small {
+				font-size: 15px;
+			}
+			.send-balance-fix {
+				padding: 0px 0px 8px 0px;
+				display: inline-block;
+			}
+			.break-word {
+				word-wrap: break-word;
+			}
+		</style>
+		<title>AVN Wallet</title>
+		<meta name="description" content="AVN Web Wallet">
+	</head>
+	<body style="width:480px; height:580px">
+		<!-- Navbar -->
+		<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+				<a href="#" class="navbar-brand">
+					<svg id="logo" style="max-width: 20px;margin-top: -5px;margin-right: 5px; overflow: visible" data-name="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290.82 480"><defs><style>.cls-1{fill:#fff;}</style></defs><title>mbc_whiteicon</title><path class="cls-1" d="M 261.94336,6.0292969 C 245.4928,18.267183 232.46666,34.743659 217.73828,49.058594 211.11846,63.418569 221.96376,85.900963 204.08789,94.601562 177.26669,113.49947 169.75894,64.719474 145.65234,79.371094 129.09611,93.4498 108.7441,107.20115 102.57812,129.25 c -3.874025,44.16945 -1.49794,88.68394 -2.32226,133 L 99.933594,389 c 14.244456,0.8648 25.913636,-9.76336 30.566406,-22.5 0.31443,-61.38095 0.48486,-122.76257 0.95508,-184.14258 0.0163,-22.68151 -2.29888,-48.38724 16.75195,-64.99609 16.63298,0.78782 36.04837,14.25815 55.53125,11.41797 1.66214,18.3075 13.52799,32.30479 26.9961,44.47656 12.367,6.75498 24.25378,37.05154 37.35351,26.20898 15.71212,-17.40392 34.97435,-32.20849 47.88086,-51.8125 -2.5514,-27.04677 23.34379,-17.07924 40.11914,-24.1289 17.92006,-18.81539 33.31177,5.97974 36.09961,23.79297 1.92907,68.72377 0.79933,137.52684 1.28906,206.28515 C 390.32421,371.27311 405.68409,390.10719 424,389 c -0.042,-69.1298 0.059,-138.25908 -0.11133,-207.38867 -1.65726,-24.74427 4.93846,-53.7514 -13.58203,-73.76367 C 397.0781,95.689783 385.09757,76.992313 365.27734,76.720703 353.57568,77.411659 352.01409,100.27001 335.66211,97.628906 308.84795,101.06246 307.67892,70.636321 307.60742,51.71875 293.55034,35.539104 279.10357,18.819566 261.94336,6.0292969 Z m 0.99414,46.9257811 c 5.51878,0.162448 10.99828,4.560842 13.12891,14.263672 -0.3282,15.342977 1.12336,30.55609 10.43359,41.41016 1.49694,15.85992 -1.4422,32.15552 -14.9668,42.39453 -11.08648,22.43823 -30.77895,-13.63358 -33.86914,-24.90235 -4.53412,-20.67951 16.06015,-33.339325 10.82032,-55.056637 0.19689,-11.524073 7.35754,-18.318237 14.45312,-18.109375 z m 108.30469,99.677732 c -8.98307,0.052 -25.00612,12.92404 -24.34571,21.67188 -1.73731,32.56239 -0.57941,65.23956 -0.89648,97.85351 -2.29196,13.48858 5.88034,27.54645 18.74023,32.41211 C 368.6865,305.95012 372.87758,306.0103 377,306 V 157.48242 c -0.55118,-3.45938 -2.76346,-4.86694 -5.75781,-4.84961 z m -221.04297,0.0488 c -1.05862,-0.0506 -2.12656,-0.0382 -3.19922,0.041 v 76.63867 74.25976 c 9.12746,8.62833 28.19488,-8.0815 31,-20.40625 v -98.82812 c 1.9206,-16.02025 -11.92152,-30.94636 -27.80078,-31.70508 z m 174.12695,47.40625 c -23.90092,3.10988 -30.1301,28.15241 -27.39844,48.4082 5.48795,23.18066 -31.2658,32.74943 -20.52343,55.38282 16.52817,10.56974 8.56391,22.50728 4.9375,37.55468 -4.95746,19.0132 8.0392,9.46267 18.31836,4.16993 22.96656,-7.10009 36.95468,20.40788 39.05468,39.39648 1.39241,1.26843 2.69819,-1.97474 3.66993,-2.02344 15.73347,-5.90572 6.86471,-38.55151 22.19531,-35.10937 10.62472,11.71065 12.0948,6.43253 10.02344,-6.58985 -0.0267,-25.93265 -26.48498,-35.54746 -48.21875,-31.1914 -24.6375,-13.09792 0.24058,-29.2159 1.02734,-48.06641 -0.96024,-19.89573 4.78926,-45.61434 -3.08594,-61.93164 z M 197.56641,200.707 c -3.214,18.25615 -0.70359,37.28763 -1.17579,55.89453 -1.82778,13.5536 5.73833,25.72858 13.57422,36.18164 -2.95306,24.20027 -32.77101,12.2543 -47.85742,22.67774 -11.98981,7.30806 -15.63729,32.47789 -11.93359,39.81836 21.41486,-25.05737 15.78995,15.80789 29.4375,26.01172 10.97037,11.30571 7.83175,-27.98899 22.34961,-31.20704 11.75802,-15.19826 32.73113,2.9304 40.61914,4.14063 5.54961,-17.06126 -16.65761,-35.77865 2.7793,-47.33594 16.4555,-24.6772 -26.24621,-35.97322 -18.24415,-61.79492 3.14723,-19.30446 -7.33656,-45.22676 -29.54882,-44.38672 z M 215,362.65039 c -2.99749,19.01851 -6.39288,37.97467 -9.70117,56.94141 -11.70453,24.15489 10.60702,40.67924 25.79297,55.74414 5.60882,5.71652 11.25161,11.39948 16.9707,17.00586 9.52529,15.87092 21.0232,10.65586 30.35742,-2.44336 14.13844,-16.05986 32.89662,-29.34354 43.56055,-47.8125 -2.60037,-21.02045 -7.12949,-41.7573 -10.37109,-62.6875 2.7974,-19.34595 -13.75801,-20.63372 -22.3379,-6.1836 -13.68684,17.91457 -1.44212,39.98894 0.15625,59.83204 l -22.04882,22.13281 c -5.33059,10.20033 -10.55836,0.94317 -15.80664,-4.2793 -16.30908,-10.69561 -19.16914,-27.37155 -12.43555,-44.9375 C 245.40152,388.3389 235.92471,362.4591 215,362.65039 Z" transform="translate(-79.618663,2.4623562)" /></svg>
+					<b tkey="wallet-title"></b>
+				</a>
+				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a href="#" class="nav-link router-link mr-md-2" data-route="homepage" tkey="home"></a>
+						</li>
+						<li class="nav-item">
+							<a href="#/create" class="nav-link router-link mr-md-2" data-route="create" tkey="create"></a>
+						</li>
+						<li class="nav-item">
+							<a href="#/broadcast" class="nav-link router-link mr-md-2" data-route="broadcast" tkey="broadcast"></a>
+						</li>
+						<li class="nav-item">
+							<a href="#/settings" class="nav-link router-link mr-md-2" data-route="settings" tkey="settings"></a>
+						</li>
+						<li class="nav-item dropdown" id="network-list">
+							<a class="nav-item nav-link dropdown-toggle" href="#" id="network-versions" data-toggle="dropdown">NETWORK</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="network-versions" ></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Error message and search -->
+		<div class="container">
+			<div id="error-message" class="alert alert-warning d-none" role="alert">
+				Error, yay :)
+			</div>
+		</div>
+
+		<!-- Home page -->
+		<div id="homepage" class="router-page">
+			<div class="container">
+				<div id="open-block">
+					<div class="card mb-3">
+						<div class="card-header">
+							<ul class="nav nav-tabs card-header-tabs">
+								<li class="nav-item mr-2">
+									<a class="nav-link tab-link active" data-tab-name="open-regular" data-tab-family="open-block" href="#" tkey="open-regular"></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link tab-link" data-tab-name="open-key" data-tab-family="open-block" href="#" tkey="open-key"></a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<form id="open-regular-form" class="open-form tab-item" data-tab="open-regular">
+								<div class="input-group pb-2">
+									<input id="open-email" name="open-email" class="form-control" type="text" tkey="email-address">
+								</div>
+								<div class="input-group">
+									<input id="open-password" name="open-password" class="form-control" type="password" tkey="password">
+									<input id="open-password-confirm" name="open-password-confirm" class="form-control" type="password" tkey="password-confirm">
+									<div class="input-group-append">
+										<button class="btn btn-outline-dark b-width" type="submit" id="open-regular-wallet" tkey="open"></button>
+									</div>
+								</div>
+							</form>
+							<form id="open-key-form" class="open-form tab-item d-none" data-tab="open-key">
+								<div class="input-group">
+									<input id="passphrase" name="passphrase" class="form-control" type="password" tkey="wif-key">
+									<div class="input-group-append">
+										<button class="btn btn-outline-dark b-width" type="submit" id="open-key-wallet" tkey="open"></button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="card-footer">
+							<div class="footer-item tab-item" data-tab="open-regular" tkey="open-reminder">
+							</div>
+							<div class="footer-item tab-item d-none" data-tab="open-key">
+								<span tkey="generate-question"></span> <span tkey="generate-it"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="wallet-block" class="d-none">
+					<div class="card mb-3">
+						<div class="card-header">
+							<ul class="nav nav-tabs card-header-tabs">
+								<li class="nav-item mr-2">
+									<a class="nav-link tab-link active" data-tab-name="wallet-balance" data-tab-family="wallet-block" href="#" tkey="wallet"></a>
+								</li>
+								<li class="nav-item mr-2">
+									<a class="nav-link tab-link" data-tab-name="wallet-send" data-tab-family="wallet-block" href="#" tkey="send"></a>
+								</li>
+								<li class="nav-item mr-2">
+									<a id="history-link" class="nav-link" target="_blank" href="https://sugar.wtf/#/address/" tkey="history"></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link tab-link" data-tab-name="wallet-keys" data-tab-family="wallet-block" href="#" tkey="keys"></a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="text-center">
+								<div class="tab-item" data-tab="wallet-balance">
+									<div id="qr-code-addres" class="qr-code"></div>
+									<div id="wallet-address"></div>
+									<div class="wallet-balance mb-0 pb-0 c-pointer">
+										<span class="text-monospace amount"></span>
+										<span class="ticker" tkey="loading"></span>
+									</div>
+								</div>
+							</div>
+
+							<div id="wallet-send" class="tab-item d-none" data-tab="wallet-send">
+								<div class="mb-2">
+									<span class="">
+										<span tkey="available-balance"></span>
+										<b class="wallet-balance balance-small c-pointer">
+											<span class="amount"></span>
+											<span class="ticker" tkey="loading"></span>
+										</b>
+									</span>
+
+									<div class="float-md-right">
+										<a href="#" id="send-qr" class="text-dark pr-1">
+											<span tkey="scan-qr"></span>
+											<span class="entypo camera"></span>
+										</a>
+										<a href="#" id="send-reset" class="text-dark">
+											<span tkey="reset"></span>
+											<span class="entypo cycle"></span>
+										</a>
+									</div>
+								</div>
+
+								<div id="send-outputs">
+									<div class="input-group send-outputs-item mb-2">
+										<input name="send-address" class="form-control" type="text" value="" tkey="enter-address" >
+										<input name="send-ammount" class="form-control" type="text" value="" tkey="amount">
+										<div class="input-group-append">
+											<button id="add-output" class="btn btn-outline-dark">
+												<span class="entypo plus"></span>
+											</button>
+										</div>
+									</div>
+								</div>
+
+								<div class="input-group">
+									<input id="send-fee" class="form-control" placeholder="Fee" type="text" value="">
+									<div class="input-group-append">
+										<button class="btn btn-outline-dark b-width" type="submit" id="send-tx" tkey="send"></button>
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-item d-none" data-tab="wallet-keys">
+								<div id="wallet-keys">
+									<div id="wallet-keys-pubkey">
+										<label tkey="public-key"></label>
+										<div class="input-group pb-2">
+											<input class="form-control" readonly type="text">
+										</div>
+									</div>
+
+									<div id="wallet-keys-privkey">
+										<label tkey="private-key"></label>
+										<div class="input-group pb-2">
+											<div class="input-group">
+												<input class="form-control keys-privkey privkey" readonly data-original-title="" title="" type="password">
+												<span class="input-group-append">
+													<button class="btn btn-outline-dark b-width toggle-priv-key" type="button" tkey="show"></button>
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div id="wallet-keys-script">
+										<label>Redeem Script <i>(SegWit)</i></label>
+										<div class="input-group pb-2">
+											<input class="form-control" readonly type="text">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer">
+							<button id="footer-close" type="button" class="btn btn-danger btn-block footer-item" tkey="close"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Generate address -->
+		<div id="create" class="router-page">
+			<div class="container">
+				<div class="card mb-3">
+					<div class="card-header">
+						<b tkey="create-wallet"></b>
+					</div>
+					<div class="card-body">
+						<div id="create-keys">
+							<div id="create-keys-address">
+								<label tkey="address"></label>
+								<div class="input-group pb-2">
+									<input class="form-control" readonly type="text">
+								</div>
+							</div>
+
+							<div id="create-keys-pubkey">
+								<label tkey="public-key"></label>
+								<div class="input-group pb-2">
+									<input class="form-control" readonly type="text">
+								</div>
+							</div>
+
+							<div id="create-keys-privkey">
+								<label tkey="private-key"></label>
+								<div class="input-group pb-2">
+									<div class="input-group">
+										<input class="form-control keys-privkey privkey" readonly data-original-title="" title="" type="password">
+										<span class="input-group-append">
+											<button class="btn btn-outline-dark b-width toggle-priv-key" type="button" tkey="show"></button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer">
+						<button id="footer-create" type="button" class="btn btn-primary btn-block footer-item" tkey="create"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Broadcast transaction -->
+		<div id="broadcast" class="router-page">
+			<div class="container">
+				<div class="card mb-3">
+					<div class="card-header">
+						<b tkey="broadcast-transaction"></b>
+					</div>
+					<div class="card-body">
+						<textarea class="form-control" id="transaction-broadcast-raw" rows="4" tkey="enter-transaction"></textarea>
+					</div>
+					<div class="card-footer">
+						<button id="footer-broadcast" type="button" class="btn btn-primary btn-block footer-item" tkey="broadcast"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Settings transaction -->
+		<div id="settings" class="router-page">
+			<div class="container">
+				<div class="card mb-3">
+					<div class="card-header">
+						<b tkey="wallet-settings"></b>
+					</div>
+					<div class="card-body">
+						<div id="address-type-select">
+							<label tkey="address-type"></label>
+							<div class="input-group pb-2">
+								<select class="custom-select">
+									<option>legacy</option>
+								</select>
+							</div>
+						</div>
+						<div id="wallet-backend">
+							<label tkey="wallet-backend"></label>
+							<div class="input-group pb-2">
+								<input class="form-control" type="text" tkey="wallet-api">
+								<span class="input-group-append">
+									<button class="btn btn-outline-dark b-width" type="button" tkey="update"></button>
+								</span>
+							</div>
+						</div>
+						<div id="wallet-language-select">
+							<label tkey="wallet-language"></label>
+							<div class="input-group">
+								<select class="custom-select"></select>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer">
+						<span tkey="version"></span> <b id="wallet-version"></b>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="send-modal" class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 id="send-title" class="modal-title"></h5>
+						<button id="send-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div id="confirm-screen">
+							<span tkey="send-warning"></span> <strong id="confirm-amount"></strong>. <span tkey="send-warning-reverse"></span>
+						</div>
+						<div id="status-screen" class="break-lines d-none">
+							<span></span>
+							<div class="extra-info"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="send-cancel" type="button" class="btn btn-block mr-auto btn-dark" data-dismiss="modal" tkey="cancel"></button>
+						<button id="send-confirm" type="button" class="btn btn-block mt-0 mr-auto btn-primary" tkey="send-it"></button>
+						<button id="send-close-footer" type="button" class="btn btn-block mt-0 mr-auto btn-dark d-none disabled" data-dismiss="modal" tkey="close"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="scan-modal" class="modal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" tkey="scan-modal-title"></h5>
+						<button id="scan-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div id="loading-message">
+
+						</div>
+						<canvas id="scan-canvas" hidden class="w-100"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="disclaimer mb-3">
+			<div class="container text-center">
+				<small class="text-muted" style="max-width: 1100px;" tkey="disclaimer"></small>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer class="mb-3">
+			<div class="container text-center">
+				Made by Avian Team
+			</div>
+		</footer>
+	</body>
+</html>
