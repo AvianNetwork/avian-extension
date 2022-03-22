@@ -19,8 +19,7 @@
 	],
 	"web_accessible_resources": [
   		"wallet/index.html",
-		"avian-web3.js",
-		"metamask-bridge.js"
+		"avian.js"
 	],
 	 "content_scripts": [
     {
