@@ -1,6 +1,6 @@
 var avian = {
-  call: function (method, args) {
-      notifyContent(method, args)
+  call: function(data) {
+      notifyContent(data.method, data.args)
   },
   getBal: function() {
       notifyContent("avn_balance", {});
