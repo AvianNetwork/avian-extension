@@ -1,21 +1,25 @@
-// Inject Avian web3
+// Inject Avian
 var s = document.createElement('script');
-s.src = chrome.runtime.getURL('avian-web3.js');
-s.onload = function() {
+s.src = browser.runtime.getURL('avian.js');
+s.onload = function () {
     this.remove();
 };
 (document.head || document.documentElement).appendChild(s);
 
-// Inject MetaMask Web3 Bridge (testing only)
-var e = document.createElement('script');
-e.src = chrome.runtime.getURL('metamask-bridge.js');
-e.onload = function() {
-    this.remove();
-};
-(document.head || document.documentElement).appendChild(e);
+window.addEventListener("sendAvianData", function (e) {
+    var data = e.detail;
+    var send = notifyBackground(data.method, data.args);
+    send.then(
+        message => alert(message.response),
+        error => console.log(`Error: ${error}`)
+    );
+}, false);
 
-// Custom event listeners
-document.addEventListener('print', function (e) {
-  var data = e.detail
-  console.log('Received: ', data);
-});
+function notifyBackground(method, args) {
+    var send = browser.runtime.sendMessage({
+        method: method,
+        args: args
+    });
+    return send;
+}
+console.log(message.response);

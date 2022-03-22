@@ -1,14 +1,13 @@
-// Avian Web3 implementation
-var Avian = {
-    print: function(data){
-      var e = `Avian Web3: ${data}`
-      // Show popup
-      callFunc(e, "test args")
-    }
+var avian = {
+  call: function (method, args) {
+      notifyContent(method, args)
+  },
+  getBal: function() {
+      notifyContent("avn_balance", {});
+  }
 }
 
-// Internal functions
-function callFunc(func, args){
-	var data = { "func": func, "args": args };
-	document.dispatchEvent(new CustomEvent('print', { "detail": data }));
+function notifyContent(method, args) {
+  var evt = new CustomEvent("sendAvianData", {detail: {method, args}});
+  window.dispatchEvent(evt);        
 }
