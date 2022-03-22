@@ -4,12 +4,10 @@
 	"description": "Web wallet with web3 for Avian",
 	"homepage_url": "https://avn.network/",
 	"manifest_version": 2,
-	"minimum_chrome_version": "74",
 	"applications": {
 		"gecko": {
-			"id": "avian@alamshafil.github.io",
-			"strict_min_version": "67.0"
-		}
+			"id": "avian@alamshafil.github.io"
+				}
 	},
 	"icons": {
 		"128": "icon.png"
@@ -31,7 +29,7 @@
 			"js": [
 				"contentscript.js"
 			],
-			"run_at": "document_start",
+			"run_at": "document_end",
 			"all_frames": true
 		}
 	],

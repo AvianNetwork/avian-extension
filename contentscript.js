@@ -16,7 +16,7 @@ window.addEventListener("sendAvianData", function (e) {
 }, false);
 
 function notifyBackground(method, args) {
-    var send = browser.runtime.sendMessage({
+    var send = chrome.runtime.sendMessage({
         method: method,
         args: args
     });
