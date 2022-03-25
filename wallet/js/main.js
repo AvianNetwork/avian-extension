@@ -447,7 +447,8 @@ function walletHistory() {
 			var type = (txs.type == 'vout') ? '<i class="fa-solid fa-arrow-right"></i> Received' : '<i class="fa-solid fa-arrow-left-long"></i> Sent'
 			var info = txInfo(txs.addresses).then(function (tx) {
 				var total = (tx.tx.total) * (1e-8);
-				return {total}
+				var time = tx.tx.timestamp;
+				return {total, time}
 			})
 			info.then(e => {
 				$('#wallet-history').append(
@@ -457,6 +458,7 @@ function walletHistory() {
 							<h5 class="card-title">${type}</h5>
 							<p class="card-text">Hash: ${txs.addresses}</p>
 							<p class="card-text">Total: ${e.total} AVN</p>
+							<p class="card-text">Date: ${new Date(e.time*1000).toDateString()}</p>
 						</div>
 					</div>
 					`
