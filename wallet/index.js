@@ -1,7 +1,7 @@
 // Config
 var stream = undefined
 var walletTimer = false
-var walletVersion = '2.6.1'
+var walletVersion = '1.0.0'
 var networkConfigs = {
 	'AVN': {
 		'uri': 'avian:',
