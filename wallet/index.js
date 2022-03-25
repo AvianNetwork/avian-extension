@@ -483,7 +483,7 @@ function checkBalanceLoop() {
 			walletBalance()
 		}
 		checkBalanceLoop()
-	}, 20000)
+	}, 60000)
 }
 
 // Open wallet by key
