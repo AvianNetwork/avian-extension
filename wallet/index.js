@@ -349,10 +349,19 @@ function estimateFee() {
 	})
 }
 
-// Get address balancefalse
-function addressBalance(address) {setData
+// Get address balance
+function addressBalance(address) {
 	return Promise.resolve($.ajax({
 		'url': 'https://explorer-us.avn.network/ext/getbalance/' + address,
+	})).then(function (data) {
+		return data
+	})
+}
+
+// Get address history
+function addressHistory(address) {
+	return Promise.resolve($.ajax({
+		'url': 'https://explorer-us.avn.network/ext/getaddress/' + address,
 	})).then(function (data) {
 		return data
 	})
@@ -421,6 +430,26 @@ function walletBalance() {
 	})
 }
 
+// Check wallet history
+function walletHistory() {
+	addressHistory(globalData.address).then(function (data) {
+		data.last_txs.forEach(tx => {
+			var type;
+			type = (tx.type == "vin") ? "Received" : "Sent"
+			$('#wallet-history').append(
+				`
+				<div class="card border-light mb-3">
+					<div class="card-body">
+						<h5 class="card-title">${type}</h5>
+						<p class="card-text">Hash: ${tx.addresses}</p>
+					</div>
+				</div>
+				`
+			)
+		});
+	})
+}
+
 // Set title
 function setHomeTitle() {
 	if (globalData.keys != undefined) {
@@ -460,6 +489,7 @@ function openWallet(keys) {
 
 	// Init wallet stuffs
 	walletBalance()
+	walletHistory()
 	checkBalanceLoop()
 	setHomeTitle()
 }
