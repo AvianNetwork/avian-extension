@@ -24,6 +24,10 @@ body {
     color: rgba(255, 255, 255, .75);
 }
 
+.nav-link {
+    padding: 10px !important;
+}
+
 .router-page {
     display: none;
 }

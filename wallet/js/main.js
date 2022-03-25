@@ -444,7 +444,7 @@ function walletBalance() {
 function walletHistory() {
 	addressHistory(globalData.address).then(function (history) {
 		history.last_txs.forEach(txs => {
-			var type = (txs.type == "vout") ? "Received" : "Sent"
+			var type = (txs.type == 'vout') ? '<i class="fa-solid fa-arrow-right"></i> Received' : '<i class="fa-solid fa-arrow-left-long"></i> Sent'
 			var info = txInfo(txs.addresses).then(function (tx) {
 				var total = (tx.tx.total) * (1e-8);
 				return {total}
