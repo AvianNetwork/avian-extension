@@ -442,22 +442,28 @@ function walletBalance() {
 
 // Check wallet history
 function walletHistory() {
-	addressHistory(globalData.address).then(function (data) {
-		data.last_txs.forEach(tx => {
-			var type = (tx.type == "vout") ? "Received" : "Sent"
-
-			$('#wallet-history').append(
-				`
-				<div class="card border-light mb-3">
-					<div class="card-body">
-						<h5 class="card-title">${type}</h5>
-						<p class="card-text">Hash: ${tx.addresses}</p>
+	addressHistory(globalData.address).then(function (history) {
+		history.last_txs.forEach(txs => {
+			var type = (txs.type == "vout") ? "Received" : "Sent"
+			var info = txInfo(txs.addresses).then(function (tx) {
+				var total = (tx.tx.total) * (1e-8);
+				return {total}
+			})
+			info.then(e => {
+				$('#wallet-history').append(
+					`
+					<div class="card border-light mb-3">
+						<div class="card-body">
+							<h5 class="card-title">${type}</h5>
+							<p class="card-text">Hash: ${txs.addresses}</p>
+							<p class="card-text">Total: ${e.total} AVN</p>
+						</div>
 					</div>
-				</div>
-				`
-			)
+					`
+				)
+			});
 		});
-	})
+	});
 }
 
 // Set title
