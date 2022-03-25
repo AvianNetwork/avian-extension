@@ -36,7 +36,7 @@
 	<script src="multilang.js"></script>
 	<script src="bitcoinjs.min.js"></script>
 	<script src="index.js"></script>
-	
+
 	<title>AVN Wallet</title>
 	<meta name="description" content="AVN Web Wallet">
 </head>
@@ -167,8 +167,8 @@
 									href="#" tkey="send"></a>
 							</li>
 							<li class="nav-item mr-2">
-								<a id="history-link" class="nav-link" target="_blank"
-									href="https://sugar.wtf/#/address/" tkey="history"></a>
+								<a id="history-link" class="nav-link tab-link" data-tab-name="wallet-history"
+									data-tab-family="wallet-block" href="#" tkey="history"></a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link tab-link" data-tab-name="wallet-keys" data-tab-family="wallet-block"
@@ -229,6 +229,12 @@
 									<button class="btn btn-outline-dark b-width" type="submit" id="send-tx"
 										tkey="send"></button>
 								</div>
+							</div>
+						</div>
+
+						<div class="tab-item d-none" data-tab="wallet-history">
+							<div id="wallet-history">
+								<h1>history tab</h1>
 							</div>
 						</div>
 

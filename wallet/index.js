@@ -449,7 +449,6 @@ function openWallet(keys) {
 	$('#wallet-address').html(globalData.address)
 	$('#open-block').addClass('d-none')
 	$('#wallet-block').removeClass('d-none')
-	$('#history-link').attr('href', blockExplorer.address(globalData.address))
 	$('#send-fee').attr('placeholder', getText('fee') + ' (' + getText('recommended') + ' ' + globalData.rfee + ' ' + getConfig()['ticker'] + ')')
 	showQrAddress(getConfig()['uri'] + globalData.address)
 
