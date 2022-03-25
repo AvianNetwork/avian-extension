@@ -456,7 +456,7 @@ function walletHistory() {
 					<div class="card border-light mb-3">
 						<div class="card-body">
 							<h5 class="card-title">${type}</h5>
-							<p class="card-text">Hash: ${txs.addresses}</p>
+							<p class="font-monospace card-text">Hash: ${txs.addresses}</p>
 							<p class="card-text">Total: ${e.total} AVN</p>
 							<p class="card-text">Date: ${new Date(e.time*1000).toDateString()}</p>
 						</div>
