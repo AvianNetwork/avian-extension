@@ -36,6 +36,8 @@ var walletLanguages = {
 		'send': 'Send',
 		'history': 'History',
 		'keys': 'Keys',
+		'assets': 'Assets',
+		'afp': 'AFP',
 		'reset': 'Reset',
 		'available-balance': 'Available balance:',
 		'enter-address': 'Enter address',
