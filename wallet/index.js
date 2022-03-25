@@ -350,7 +350,7 @@ function estimateFee() {
 }
 
 // Get address balancefalse
-function addressBalance(address) {
+function addressBalance(address) {setData
 	return Promise.resolve($.ajax({
 		'url': 'https://explorer-us.avn.network/ext/getbalance/' + address,
 	})).then(function (data) {
@@ -443,7 +443,6 @@ function checkBalanceLoop() {
 
 // Open wallet by key
 function openWallet(keys) {
-	setData("keys", keys);
 	globalData.address = getAddress(keys)
 	var pubkey = keys.publicKey.toString('hex')
 	var wif = keys.toWIF()
@@ -793,19 +792,28 @@ function initWallet() {
 
 // Check if the user is logged in
 function checkLogin() {
-	if(checkData("keys")) {
-		openWallet(readData("keys"));
+	if(checkData("privkey")) {
+		globalData.keys = bitcoinjs.ECPair.fromPrivateKey(
+			bitcoinjs.Buffer.from(readData("privkey"), 'hex'),
+			{ 'network': getConfig()['network'] }
+		)
+		initWallet();
+	} else if(checkData("wifkey")) {
+		globalData.keys = bitcoinjs.ECPair.fromWIF(readData("wifkey"), getConfig()['network'])
+		initWallet();
 	}
 }
 
 // Logout and remove keys
 function logout() {
-	deleteData("keys");
+	deleteData("privkey");
+	deleteData("wifkey");
 }
 
 // All starts here
 $(document).ready(function () {
 	initLang()
+	checkLogin();
 
 	$('#wallet-version').text(walletVersion)
 	$('#wallet-backend input').val(getBackend())
@@ -884,6 +892,8 @@ $(document).ready(function () {
 		if ([51, 52].includes(wifLength)) {
 			try {
 				globalData.keys = bitcoinjs.ECPair.fromWIF(wif, getConfig()['network'])
+				deleteData("privkey");
+				setData("wifkey", wif);
 			} catch (e) {
 				showMessage(messages.errors['bad-priv-key'])
 				showMessage(e.message)
@@ -923,6 +933,9 @@ $(document).ready(function () {
 					$('#open-email').val('')
 					$('#open-password').val('')
 					$('#open-password-confirm').val('')
+
+					deleteData("wifkey");
+					setData("privkey", s);
 
 					globalData.keys = bitcoinjs.ECPair.fromPrivateKey(
 						bitcoinjs.Buffer.from(s, 'hex'),
@@ -1030,6 +1043,4 @@ $(document).ready(function () {
 	$('#scan-modal').on('hide.bs.modal', function (e) {
 		stopStream()
 	})
-
-	checkLogin();
 })
