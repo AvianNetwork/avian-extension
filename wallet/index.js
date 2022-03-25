@@ -367,6 +367,16 @@ function addressHistory(address) {
 	})
 }
 
+// Get TX info
+function txInfo(hash) {
+	return Promise.resolve($.ajax({
+		'url': 'https://explorer-us.avn.network/ext/gettx/' + hash,
+	})).then(function (data) {
+		return data
+	})
+}
+
+
 // Get address UTXO
 function getUnspent(address, amount) {
 	return Promise.resolve($.ajax({
@@ -434,8 +444,8 @@ function walletBalance() {
 function walletHistory() {
 	addressHistory(globalData.address).then(function (data) {
 		data.last_txs.forEach(tx => {
-			var type;
-			type = (tx.type == "vin") ? "Received" : "Sent"
+			var type = (tx.type == "vout") ? "Received" : "Sent"
+
 			$('#wallet-history').append(
 				`
 				<div class="card border-light mb-3">
