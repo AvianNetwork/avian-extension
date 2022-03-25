@@ -254,7 +254,7 @@ function deleteData(name) {
 }
 
 // Check item
-function checkItem(name) {
+function checkData(name) {
 	return localStorage.getItem(name) == null ? false : true;
 }
 
@@ -349,7 +349,7 @@ function estimateFee() {
 	})
 }
 
-// Get address balance
+// Get address balancefalse
 function addressBalance(address) {
 	return Promise.resolve($.ajax({
 		'url': 'https://explorer-us.avn.network/ext/getbalance/' + address,
@@ -443,6 +443,7 @@ function checkBalanceLoop() {
 
 // Open wallet by key
 function openWallet(keys) {
+	setData("keys", keys);
 	globalData.address = getAddress(keys)
 	var pubkey = keys.publicKey.toString('hex')
 	var wif = keys.toWIF()
@@ -679,6 +680,7 @@ function closeWallet() {
 	$('#open-block').removeClass('d-none')
 	$('#wallet-block').addClass('d-none')
 	globalData.clear()
+	logout()
 	setHomeTitle()
 }
 
@@ -787,6 +789,18 @@ function initWallet() {
 	if (globalData.keys != undefined) {
 		openWallet(globalData.keys)
 	}
+}
+
+// Check if the user is logged in
+function checkLogin() {
+	if(checkData("keys")) {
+		openWallet(readData("keys"));
+	}
+}
+
+// Logout and remove keys
+function logout() {
+	deleteData("keys");
 }
 
 // All starts here
@@ -1016,4 +1030,6 @@ $(document).ready(function () {
 	$('#scan-modal').on('hide.bs.modal', function (e) {
 		stopStream()
 	})
+
+	checkLogin();
 })
