@@ -468,6 +468,33 @@ function walletHistory() {
 	});
 }
 
+// Avian Flight Plans
+function afp() {
+	const data = [
+		{
+			"name": "AFP #1",
+			"hash": "Qmxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		},
+		{
+			"name": "AFP #2",
+			"hash": "Qmxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		}
+	]
+
+	data.forEach(plan => {
+		$('#wallet-afp').append(
+			`
+			<div class="card border-light mb-3">
+				<div class="card-body">
+					<h5 class="card-title">${plan.name}</h5>
+					<p class="font-monospace card-text">Hash: ${plan.hash}</p>
+				</div>
+			</div>
+			`
+		)
+	})
+}
+
 // Set title
 function setHomeTitle() {
 	if (globalData.keys != undefined) {
@@ -508,6 +535,7 @@ function openWallet(keys) {
 	// Init wallet stuffs
 	walletBalance()
 	walletHistory()
+	afp()
 	checkBalanceLoop()
 	setHomeTitle()
 }
