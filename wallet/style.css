@@ -21,10 +21,6 @@ body {
     margin-right: 5px;
 }
 
-.b-width {
-    min-width: 100px;
-}
-
 .navbar-dark .navbar-nav .nav-link.active {
     color: rgba(255, 255, 255, .75);
 }
