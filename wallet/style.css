@@ -1,0 +1,95 @@
+html {
+    height: 100%;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    padding-top: 75px;
+    padding-bottom: 56px;
+    position: relative;
+}
+
+#logo {
+    max-width: 30px;
+    max-height: 30px;
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+.b-width {
+    min-width: 100px;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: rgba(255, 255, 255, .75);
+}
+
+.router-page {
+    display: none;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.break-lines {
+    /* https://stackoverflow.com/a/18706058/9217774 <3 */
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+    /* Non standard for webkit */
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr-code canvas {
+    max-width: 100%;
+}
+
+.wallet-balance {
+    font-size: 23px;
+}
+
+.wallet-balance .text-monospace {
+    font-size: 20px;
+}
+
+[class*="entypo"]:before {
+    font-family: 'EntypoRegular', sans-serif;
+    font-size: 16px;
+}
+
+@media (max-width: 991.98px) {
+
+    .navbar-expand-lg>.container,
+    .navbar-expand-lg>.container-fluid {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+.balance-small {
+    font-size: 15px;
+}
+
+.send-balance-fix {
+    padding: 0px 0px 8px 0px;
+    display: inline-block;
+}
+
+.break-word {
+    word-wrap: break-word;
+}
