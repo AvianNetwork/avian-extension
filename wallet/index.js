@@ -111,7 +111,7 @@ function initMessages() {
 }
 
 function initLang() {
-	var language = readCookie('language')
+	var language = readData('language')
 	var set_lang = 'en'
 
 	if (language == null || walletLanguages[language] == undefined) {
@@ -120,8 +120,8 @@ function initLang() {
 			set_lang = user_lang
 		}
 
-		setCookie('language', set_lang, 60)
-		language = readCookie('language')
+		setData('language', set_lang, 60)
+		language = readData('language')
 	}
 
 	$('#wallet-language-select select').empty()
@@ -148,7 +148,7 @@ function initLang() {
 
 // Get current wallet language translation token
 function getText(token) {
-	var language = readCookie('language')
+	var language = readData('language')
 	if (language == undefined) {
 		language = initLang()
 	}
@@ -162,10 +162,10 @@ function getText(token) {
 
 // Get current network config
 function getConfig() {
-	var network = readCookie('network')
+	var network = readData('network')
 	if (network == null || networkConfigs[network] == undefined) {
-		setCookie('network', Object.keys(networkConfigs)[0], 60)
-		network = readCookie('network')
+		setData('network', Object.keys(networkConfigs)[0], 60)
+		network = readData('network')
 	}
 
 	return networkConfigs[network]
@@ -175,7 +175,7 @@ function getConfig() {
 function switchConfig(network, page = '') {
 	network = network.toUpperCase()
 	if (networkConfigs[network] != undefined & networkConfigs[network] != getConfig()) {
-		setCookie('network', network, 60)
+		setData('network', network, 60)
 		closeWallet()
 		displayNetworks()
 		switchBackend(networkConfigs[network]['api'])
@@ -197,10 +197,10 @@ function displayNetworks() {
 
 // Get current address type
 function getAddressType() {
-	var type = readCookie('type')
+	var type = readData('type')
 	if (type == null || !['bech32', 'segwit', 'legacy'].includes(type)) {
-		setCookie('type', 'legacy', 60)
-		type = readCookie('type')
+		setData('type', 'legacy', 60)
+		type = readData('type')
 	}
 
 	return type
@@ -209,17 +209,17 @@ function getAddressType() {
 // Switch address type
 function switchAddressType(type) {
 	if (['bech32', 'segwit', 'legacy'].includes(type)) {
-		setCookie('type', 'legacy', 60)
+		setData('type', 'legacy', 60)
 	}
 }
 
 // Get current wallet backend
 function getBackend() {
-	var backend = readCookie('backend')
+	var backend = readData('backend')
 	backend = null
 	if (backend == null) {
-		setCookie('backend', getConfig()['api'], 60)
-		backend = readCookie('backend')
+		setData('backend', getConfig()['api'], 60)
+		backend = readData('backend')
 	}
 
 	return backend
@@ -230,7 +230,7 @@ function switchBackend(url) {
 	Promise.resolve($.ajax({
 		'url': url + '/info',
 	})).then(function (data) {
-		setCookie('backend', url, 60)
+		setData('backend', url, 60)
 		showMessage(messages.settings.backendSwitched(url))
 	}).catch(function () {
 		showMessage(messages.settings.backendNotWorking(url))
@@ -238,18 +238,24 @@ function switchBackend(url) {
 	})
 }
 
-// Set cookie
-function setCookie(name, value, days) {
+// Set item
+function setData(name, value) {
 	localStorage.setItem(name, value);
 }
 
-// Read cookie
-function readCookie(name) {
+// Read item
+function readData(name) {
 	return localStorage.getItem(name);
 }
 
-function deleteCookie(name) {
-	document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+// Delete item
+function deleteData(name) {
+	localStorage.removeItem(name);
+}
+
+// Check item
+function checkItem(name) {
+	return localStorage.getItem(name) == null ? false : true;
 }
 
 // SPA router function
@@ -997,7 +1003,7 @@ $(document).ready(function () {
 
 	// Change wallet language
 	$('#wallet-language-select select').on('change', function () {
-		setCookie('language', $('#wallet-language-select select').val(), 60)
+		setData('language', $('#wallet-language-select select').val(), 60)
 		initLang()
 		initWallet()
 	})
