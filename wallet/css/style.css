@@ -8,6 +8,7 @@ body {
 }
 
 body {
+    background-color: rgba(38,38,38);
     padding-top: 75px;
     padding-bottom: 56px;
     position: relative;
