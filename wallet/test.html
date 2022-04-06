@@ -1,0 +1,10 @@
+<script>
+    function getBal() {
+        avian.getBal().then(balance => {
+            document.getElementById("bal").innerText = `${balance} AVN`
+        })
+    }
+</script>
+
+<button onclick="getBal()">Get Avian Balance</button>
+<h1 id="bal">0.00 AVN</h1>

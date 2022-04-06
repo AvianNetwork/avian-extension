@@ -7,16 +7,23 @@
 	"applications": {
 		"gecko": {
 			"id": "avian@alamshafil.github.io"
-				}
+		}
 	},
 	"icons": {
 		"128": "icon.png"
 	},
 	"permissions": [
-		"storage"
+		"storage",
+		"webRequest",
+		"unlimitedStorage",
+		"clipboardWrite",
+		"activeTab",
+		"webRequest",
+		"notifications"
 	],
 	"web_accessible_resources": [
 		"wallet/index.html",
+		"stream.js",
 		"avian.js"
 	],
 	"content_scripts": [
@@ -27,6 +34,7 @@
 				"https://*/*"
 			],
 			"js": [
+				"stream.js",
 				"contentscript.js"
 			],
 			"run_at": "document_start",
@@ -34,9 +42,7 @@
 		}
 	],
 	"background": {
-		"scripts": [
-			"background.js"
-		]
+		"page": "background.html"
 	},
 	"browser_action": {
 		"browser_style": true,
