@@ -5766,11 +5766,14 @@ var backgroundStream = new PostMessageStream.WindowPostMessageStream({
 });
 
 var avian = {
-  call: function (data) {
+  call: (data) => {
     return notifyContent(data.method, data.args)
   },
-  getBal: function (e) {
+  getBalance: () => {
     return notifyContent("getbalance", {})
+  },
+  getAddress: () => {
+    return notifyContent("getaddress", {})
   }
 }
 
