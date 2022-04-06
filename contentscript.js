@@ -27,7 +27,7 @@ avianStream.on('data', (data) => {
       chrome.storage.local.get('address').then((result) => {
         var addr = result.address;
         if (addr == undefined || addr == null) {
-          avianStream.write({ result: "No address" });
+          avianStream.write({ error: "No address" });
           return;
         }
         addressBalance(addr).then(bal => {
@@ -35,11 +35,11 @@ avianStream.on('data', (data) => {
         })
       });
       break;
-    case "getbalance":
+    case "getaddress":
       chrome.storage.local.get('address').then((result) => {
         var addr = result.address;
         if (addr == undefined || addr == null) {
-          avianStream.write({ result: "No address" });
+          avianStream.write({ error: "No address" });
           return;
         }
         avianStream.write({ result: addr });

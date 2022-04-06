@@ -5780,11 +5780,17 @@ var avian = {
 async function notifyContent(method, args) {
   backgroundStream.write({ method, args });
   const res = await parseStream(backgroundStream)
-  return res;
+
+  if(res.error) {
+    console.error(`[Avian] Request returned error: ${res.error}`);
+    return
+  }
+
+  return res.result;
 }
 
 function parseStream(stream) {
   return new Promise(resolve => {
-    stream.on('data', (e) => { resolve(e.result) });
+    stream.on('data', (e) => { resolve(e) });
   });
 }

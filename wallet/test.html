@@ -3,12 +3,8 @@
         avian.getBalance().then(balance => {
             document.getElementById("bal").innerText = `${balance} AVN`
         })
-        avian.getAddress().then(addr => {
-            document.getElementById("addr").innerHTML = `Address: ${addr}`
-        })
     }
 </script>
 
 <button onclick="data()">Get Avian data</button>
 <h1 id="bal">0.00 AVN</h1>
-<h1 id="addr">Address: </h1>
