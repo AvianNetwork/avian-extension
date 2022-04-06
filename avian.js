@@ -5770,7 +5770,7 @@ var avian = {
     return notifyContent(data.method, data.args)
   },
   getBal: function (e) {
-    return notifyContent("avn_balance", {})
+    return notifyContent("getbalance", {})
   }
 }
 

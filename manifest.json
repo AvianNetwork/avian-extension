@@ -19,7 +19,8 @@
 		"clipboardWrite",
 		"activeTab",
 		"webRequest",
-		"notifications"
+		"notifications",
+		"<all_urls>"
 	],
 	"web_accessible_resources": [
 		"wallet/index.html",
@@ -29,9 +30,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"file://*/*",
-				"http://*/*",
-				"https://*/*"
+				"<all_urls>"
 			],
 			"js": [
 				"stream.js",

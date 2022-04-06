@@ -873,9 +873,17 @@ function checkLogin() {
 			bitcoinjs.Buffer.from(readData("privkey"), 'hex'),
 			{ 'network': getConfig()['network'] }
 		)
+		var address = getAddress(globalData.keys)
+		chrome.storage.local.set({address: address}, function() {
+			console.log('Address saved for Avian API.');
+		});
 		initWallet();
 	} else if(checkData("wifkey")) {
 		globalData.keys = bitcoinjs.ECPair.fromWIF(readData("wifkey"), getConfig()['network'])
+		var address = getAddress(globalData.keys)
+		chrome.storage.local.set({address: address}, function() {
+			console.log('Address saved for Avian API.');
+		});
 		initWallet();
 	}
 }
@@ -970,6 +978,10 @@ $(document).ready(function () {
 				globalData.keys = bitcoinjs.ECPair.fromWIF(wif, getConfig()['network'])
 				deleteData("privkey");
 				setData("wifkey", wif);
+				var address = getAddress(globalData.keys)
+				chrome.storage.local.set({address: address}, function() {
+					console.log('Address saved for Avian API.');
+				});
 			} catch (e) {
 				showMessage(messages.errors['bad-priv-key'])
 				showMessage(e.message)
@@ -1017,6 +1029,10 @@ $(document).ready(function () {
 						bitcoinjs.Buffer.from(s, 'hex'),
 						{ 'network': getConfig()['network'] }
 					)
+					var address = getAddress(globalData.keys)
+					chrome.storage.local.set({"address": address}, function() {
+						console.log('Address saved for Avian API.');
+					});
 					openWallet(globalData.keys)
 				} else {
 					showMessage(messages.errors['pass-not-match'])

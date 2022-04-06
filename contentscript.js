@@ -23,11 +23,26 @@ avianStream.on('data', (data) => {
     let args = data.args;
 
     switch (method) {
-        case "avn_balance":
-            avianStream.write({result: "200"})
+        case "getbalance":
+            chrome.storage.local.get('address').then((result) => {
+              var addr = result.address;
+              if(addr == undefined || addr == null) {
+                avianStream.write({result: "No address"});
+                return;
+              }
+              addressBalance(addr).then(bal => {
+                avianStream.write({result: bal});
+              })
+            });
             break;    
         default:
             avianStream.write({result: "N/A"})
             break;
     }
 });
+
+async function addressBalance(address) {
+  const response = await fetch(`https://explorer-us.avn.network/ext/getbalance/${address}`);
+  const bal = await response.text();
+  return bal;
+}
