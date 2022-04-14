@@ -1,1 +1,1 @@
-console.log("Background JS!");
+console.log("Background JS");

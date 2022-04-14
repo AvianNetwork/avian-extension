@@ -41,7 +41,9 @@
 		}
 	],
 	"background": {
-		"page": "background.html"
+		"scripts": [
+			"background.js"
+		]
 	},
 	"browser_action": {
 		"browser_style": true,
