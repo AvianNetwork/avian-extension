@@ -448,7 +448,7 @@ function walletHistory() {
 			var info = txInfo(txs.addresses).then(function (tx) {
 				var total = (tx.tx.total) * (1e-8);
 				var time = tx.tx.timestamp;
-				return {total, time}
+				return { total, time }
 			})
 			info.then(e => {
 				$('#wallet-history').append(
@@ -458,7 +458,7 @@ function walletHistory() {
 							<h5 class="card-title">${type}</h5>
 							<p class="font-monospace card-text">Hash: ${txs.addresses}</p>
 							<p class="card-text">Total: ${e.total} AVN</p>
-							<p class="card-text">Date: ${new Date(e.time*1000).toDateString()}</p>
+							<p class="card-text">Date: ${new Date(e.time * 1000).toDateString()}</p>
 						</div>
 					</div>
 					`
@@ -868,20 +868,20 @@ function initWallet() {
 
 // Check if the user is logged in
 function checkLogin() {
-	if(checkData("privkey")) {
+	if (checkData("privkey")) {
 		globalData.keys = bitcoinjs.ECPair.fromPrivateKey(
 			bitcoinjs.Buffer.from(readData("privkey"), 'hex'),
 			{ 'network': getConfig()['network'] }
 		)
 		var address = getAddress(globalData.keys)
-		chrome.storage.local.set({address: address}, function() {
+		chrome.storage.local.set({ address: address }, function () {
 			console.log('Address saved for Avian API.');
 		});
 		initWallet();
-	} else if(checkData("wifkey")) {
+	} else if (checkData("wifkey")) {
 		globalData.keys = bitcoinjs.ECPair.fromWIF(readData("wifkey"), getConfig()['network'])
 		var address = getAddress(globalData.keys)
-		chrome.storage.local.set({address: address}, function() {
+		chrome.storage.local.set({ address: address }, function () {
 			console.log('Address saved for Avian API.');
 		});
 		initWallet();
@@ -979,7 +979,7 @@ $(document).ready(function () {
 				deleteData("privkey");
 				setData("wifkey", wif);
 				var address = getAddress(globalData.keys)
-				chrome.storage.local.set({address: address}, function() {
+				chrome.storage.local.set({ address: address }, function () {
 					console.log('Address saved for Avian API.');
 				});
 			} catch (e) {
@@ -1030,7 +1030,7 @@ $(document).ready(function () {
 						{ 'network': getConfig()['network'] }
 					)
 					var address = getAddress(globalData.keys)
-					chrome.storage.local.set({"address": address}, function() {
+					chrome.storage.local.set({ "address": address }, function () {
 						console.log('Address saved for Avian API.');
 					});
 					openWallet(globalData.keys)
@@ -1136,3 +1136,18 @@ $(document).ready(function () {
 		stopStream()
 	})
 })
+
+// Check for custom payload
+function getURLParameter(name) {
+	return decodeURI(
+		(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+	);
+}
+
+if (getURLParameter("data") != null) {
+	let rawData = atob(getURLParameter("data"));
+	let data = JSON.parse(rawData);
+	if(data.data != null && data.args != null) {
+		document.write(`Data got: ${data.data} <br><br> Args got: ${data.ags}`)
+	}
+}

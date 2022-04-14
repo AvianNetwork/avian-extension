@@ -16,6 +16,9 @@ var avian = {
   },
   getAddress: () => {
     return notifyContent("getaddress", {})
+  },
+  sendto: (addr, amount) => {
+    return notifyContent("sendto", {addr, amount})
   }
 }
 

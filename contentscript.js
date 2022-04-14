@@ -45,6 +45,10 @@ avianStream.on('data', (data) => {
         avianStream.write({ result: addr });
       });
       break;
+    case "sendto":
+      window.open(`${chrome.runtime.getURL('wallet/index.html')}?data=test`);
+      avianStream.write({ error: "Null return!" });
+      break;
     default:
       avianStream.write({ result: "N/A" })
       break;
