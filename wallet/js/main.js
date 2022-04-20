@@ -894,6 +894,12 @@ function logout() {
 	deleteData("wifkey");
 }
 
+function getURLParameter(name) {
+	return decodeURI(
+		(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
+	);
+}
+
 // All starts here
 $(document).ready(function () {
 	initLang()
@@ -1135,19 +1141,19 @@ $(document).ready(function () {
 	$('#scan-modal').on('hide.bs.modal', function (e) {
 		stopStream()
 	})
+
+	// Check for custom payload
+	if (getURLParameter("data") != null) {
+		let rawData = atob(getURLParameter("data"));
+		let data = JSON.parse(rawData);
+		if (data.data != null) parsePaylod(data.data, data.args);
+	}
 })
 
-// Check for custom payload
-function getURLParameter(name) {
-	return decodeURI(
-		(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
-	);
-}
-
-if (getURLParameter("data") != null) {
-	let rawData = atob(getURLParameter("data"));
-	let data = JSON.parse(rawData);
-	if(data.data != null && data.args != null) {
-		document.write(`Data got: ${data.data} <br><br> Args got: ${data.ags}`)
-	}
+function parsePaylod(data, args) {
+	console.log("Accepted payload");
+	setTitle(`Payload - ${data}`)
+	$('div.router-page').hide()
+	$('#test-message').show()
+	$('#test-message').html(`Data got: ${data} <br><br> Args got: ${JSON.stringify(args)}`)
 }

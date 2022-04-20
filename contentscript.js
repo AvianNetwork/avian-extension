@@ -46,7 +46,9 @@ avianStream.on('data', (data) => {
       });
       break;
     case "sendto":
-      window.open(`${chrome.runtime.getURL('wallet/index.html')}?data=test`);
+      let data = btoa(JSON.stringify({ data: "sendto", args }));
+      let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=480,height=580`;
+      window.open(chrome.runtime.getURL('wallet/index.html') + "?data=" + data, 'test', params);
       avianStream.write({ error: "Null return!" });
       break;
     default:
@@ -58,5 +60,5 @@ avianStream.on('data', (data) => {
 async function addressBalance(address) {
   const response = await fetch(`https://explorer-us.avn.network/ext/getbalance/${address}`);
   const bal = await response.text();
-  return bal;
-}
+      return bal;
+  }
