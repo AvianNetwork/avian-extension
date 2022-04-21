@@ -49,7 +49,7 @@ avianStream.on('data', (data) => {
       let data = btoa(JSON.stringify({ data: "sendto", args }));
       let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=480,height=580`;
       window.open(chrome.runtime.getURL('wallet/index.html') + "?data=" + data, 'test', params);
-      avianStream.write({ error: "Null return!" });
+      avianStream.write({ error: "[TODO] Null return!" });
       break;
     default:
       avianStream.write({ result: "N/A" })
