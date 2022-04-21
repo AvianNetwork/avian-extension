@@ -60,5 +60,5 @@ avianStream.on('data', (data) => {
 async function addressBalance(address) {
   const response = await fetch(`https://explorer-us.avn.network/ext/getbalance/${address}`);
   const bal = await response.text();
-      return bal;
-  }
+  return bal;
+}
