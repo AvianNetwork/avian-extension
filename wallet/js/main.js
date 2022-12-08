@@ -28,10 +28,10 @@ var networkConfigs = {
 // Explorer links
 var blockExplorer = {
 	'address': function (address) {
-		return 'https://explorer-us.avn.network/address/' + address;
+		return 'https://explorer.avn.network/address/' + address;
 	},
 	'tx': function (tx) {
-		return 'https://explorer-us.avn.network/tx/' + tx;
+		return 'https://explorer.avn.network/tx/' + tx;
 	}
 }
 
@@ -352,7 +352,7 @@ function estimateFee() {
 // Get address balance
 function addressBalance(address) {
 	return Promise.resolve($.ajax({
-		'url': 'https://explorer-us.avn.network/ext/getbalance/' + address,
+		'url': 'https://explorer.avn.network/ext/getbalance/' + address,
 	})).then(function (data) {
 		return data
 	})
@@ -361,7 +361,7 @@ function addressBalance(address) {
 // Get address history
 function addressHistory(address) {
 	return Promise.resolve($.ajax({
-		'url': 'https://explorer-us.avn.network/ext/getaddress/' + address,
+		'url': 'https://explorer.avn.network/ext/getaddress/' + address,
 	})).then(function (data) {
 		return data
 	})
@@ -370,7 +370,7 @@ function addressHistory(address) {
 // Get TX info
 function txInfo(hash) {
 	return Promise.resolve($.ajax({
-		'url': 'https://explorer-us.avn.network/ext/gettx/' + hash,
+		'url': 'https://explorer.avn.network/ext/gettx/' + hash,
 	})).then(function (data) {
 		return data
 	})
